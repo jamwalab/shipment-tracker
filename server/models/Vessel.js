@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // create carrier model
-class Carrier extends Model {}
+class Vessel extends Model {}
 
-Carrier.init(
+Sublocation.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,17 +12,10 @@ Carrier.init(
       primaryKey: true,
       autoIncrement: true
     },
-    //Carrier email
-    carrier_name: {
-      type: DataTypes.STRING,
-      allowNull: false
+    vessel_name: {
+      type: DataTypes.INTEGER,
     },
-    //carrier tracker url
-    carrier_url: {
-      type: DataTypes.STRING
-    },
-    //carrier contact email
-    carrier_email: {
+    vessel_eta: {
       type: DataTypes.STRING
     }
   },
@@ -30,8 +23,8 @@ Carrier.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'carrier'
+    modelName: 'vessel'
   }
 );
 
-module.exports = Carrier;
+module.exports = Vessel;

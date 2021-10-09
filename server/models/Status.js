@@ -12,6 +12,7 @@ Status.init(
       primaryKey: true,
       autoIncrement: true
     },
+    //Status text
     status_text: {
       type: DataTypes.STRING,
       allowNull: false

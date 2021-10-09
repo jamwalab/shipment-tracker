@@ -12,10 +12,12 @@ Port.init(
       primaryKey: true,
       autoIncrement: true
     },
+    //Port code
     port_code: {
       type: DataTypes.STRING,
       allowNull: false
     },
+    //port CBSA email
     port_email: {
       type: DataTypes.STRING
     }

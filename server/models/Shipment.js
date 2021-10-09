@@ -18,7 +18,7 @@ Shipment.init(
       type: DataTypes.STRING,
       unique: true
     },
-
+    //customer for the shipment
     customer_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -27,18 +27,23 @@ Shipment.init(
         key: 'id'
       }
     },
+    //notes for shipment
     notes: {
       type: DataTypes.TEXT
     },
+    //shipment PO
     po: {
       type: DataTypes.STRING
     },
+    //shipment BL
     bl: {
       type: DataTypes.STRING
     },
+    //shipment containers
     container: {
       type: DataTypes.TEXT
     },
+    //shipment carrier
     carrier_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -46,6 +51,15 @@ Shipment.init(
         key: 'id'
       }
     },
+    //shipment vessel
+    vessel_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'vessel',
+        key: 'id'
+      }
+    },
+    //shipment port
     port_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -53,6 +67,7 @@ Shipment.init(
         key: 'id'
       }
     },
+    //Sublocation
     sublocation_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -60,21 +75,27 @@ Shipment.init(
         key: 'id'
       }
     },
+    //ETA at port
     portEta: {
       type: DataTypes.DATE
     },
+    //Eta final destination
     destEta: {
       type: DataTypes.DATE
     },
+    //Entry submitted on
     submitted: {
       type: DataTypes.DATE
     },
+    //entry releasesd on
     release: {
       type: DataTypes.DATE
     },
+    //additional comments
     comment: {
       type: DataTypes.TEXT
     },
+    //shipment status
     status_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -83,6 +104,7 @@ Shipment.init(
         key: 'id'
       }
     },
+    //Broker id
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

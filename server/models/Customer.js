@@ -12,10 +12,12 @@ Customer.init(
       primaryKey: true,
       autoIncrement: true
     },
+    //Customer name
     customer_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
+    //Customer contact email
     customer_contact: {
       type: DataTypes.STRING
     }
