@@ -4,7 +4,7 @@ const sequelize = require('../config/connection');
 // create carrier model
 class Vessel extends Model {}
 
-Sublocation.init(
+Vessel.init(
   {
     id: {
       type: DataTypes.INTEGER,
