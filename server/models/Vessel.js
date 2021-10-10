@@ -12,9 +12,11 @@ Sublocation.init(
       primaryKey: true,
       autoIncrement: true
     },
+    //Vessel name
     vessel_name: {
       type: DataTypes.INTEGER,
     },
+    //Vessel current ETA
     vessel_eta: {
       type: DataTypes.STRING
     }

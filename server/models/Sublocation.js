@@ -12,13 +12,16 @@ Sublocation.init(
       primaryKey: true,
       autoIncrement: true
     },
+    //sublocation code
     sublocation_code: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    //sublocation contact
     sublocation_email: {
       type: DataTypes.STRING
     },
+    //URL if applicable
     sublocation_url: {
       type: DataTypes.STRING
     }
