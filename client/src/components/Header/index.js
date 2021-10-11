@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 import './style.css';
 
 //---MATERIAL UI IMPORTS---//
@@ -10,7 +11,7 @@ import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#eeeeee'
+      main: '#f5f5f5'
     },
     secondary: {
       main: "#1976d2"

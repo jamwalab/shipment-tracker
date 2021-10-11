@@ -6,14 +6,20 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 
 //Import pages
+import Home from './pages/Home'
+import Tracker from './pages/Tracker';
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Header/>
-      </Router>
-    </div>
+    <Router>
+      <Header/>
+      <main>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/tracker" component={Tracker} />
+        </Switch>
+      </main>
+    </Router>
   );
 }
 
