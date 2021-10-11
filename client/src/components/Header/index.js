@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
 
@@ -11,7 +11,7 @@ import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#f5f5f5'
+      main: '#fbfbfb'
     },
     secondary: {
       main: "#1976d2"
@@ -20,7 +20,17 @@ const theme = createTheme({
 });
 
 export default function Header() {
-  const [value, setValue] = useState('home');
+  const [value, setValue] = useState("home");
+
+  const homeClick = () => {
+    setValue("home");
+  }
+
+  useEffect(() => {
+    let path = window.location.pathname;
+    if (path === "/tracker" && value !== "tracker") setValue("tracker")
+    else if (path === "/" && value !== "home") setValue("home");
+  }, [value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -30,12 +40,14 @@ export default function Header() {
     <>
       <ThemeProvider theme={theme}>
         <AppBar className="d-flex row-direction flex-justify-between align-center header" color="primary">
-          <Typography className='align-center d-flex row-direction iconSpace' component="div">
-            <DirectionsBoatIcon fontSize="large" color="secondary"/>
-            <div className="iconText">
-              <p>SHIPMENT</p>
-              <p>TRACKER</p>
-            </div>
+          <Typography component="div">
+            <Link to="/" className='align-center d-flex row-direction iconSpace' onClick={homeClick}>  
+              <DirectionsBoatIcon fontSize="large" color="secondary"/>
+              <div className="iconText">
+                <p>SHIPMENT</p>
+                <p>TRACKER</p>
+              </div>
+            </Link>
           </Typography>
           <Typography className='align-center d-flex row-direction' component="div">
             <Tabs 
@@ -45,8 +57,8 @@ export default function Header() {
               textColor="secondary"
               className="menuTabs"
             >
-              <Tab value="home" label="Home"/>
-              <Tab value="tracker" label="Tracker"/>
+              <Tab value="home" label={<span className="menuItems">Home</span>} component={Link} to="/"/>
+              <Tab value="tracker" label={<span className="menuItems">Tracker</span>} component={Link} to="/tracker"/>
             </Tabs>
             <Button color="secondary" variant="contained">Login</Button>
           </Typography>

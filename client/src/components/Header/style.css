@@ -1,17 +1,31 @@
+/*--HEADER GENERAL--*/
 .header {
   padding: 20px 40px;
   min-height: 90px;
+  box-shadow: none !important;
+  background-size: cover;
 }
 
+header a {
+  text-decoration: none
+}
+
+/*--HEADER ICON--*/
 .iconText {
   padding: 0 0 0 20px;
   color: #1976d2;
+  font-weight: bold;
 }
 
 .iconText p {
   margin: 0;
 }
 
+/*---MENU NAVIGATION STYLING--*/
 .menuTabs {
   padding: 0 50px 0 0;
+}
+
+.menuItems {
+  font-weight: bold;
 }
