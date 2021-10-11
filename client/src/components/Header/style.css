@@ -1,0 +1,16 @@
+.header {
+  padding: 20px 40px;
+}
+
+.iconText {
+  padding: 0 0 0 20px;
+  color: #1976d2;
+}
+
+.iconText p {
+  margin: 0;
+}
+
+.menuTabs {
+  padding: 0 50px 0 0;
+}
