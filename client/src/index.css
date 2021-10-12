@@ -34,3 +34,29 @@ code {
 main {
   margin: 120px 40px;
 }
+
+/*---TABLE STYLING---*/
+th {
+  padding: 20px 5px !important;
+  font-weight: bold !important;
+}
+
+.table-w1 {
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.table-w2 {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.table-w3 {
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.table-w4 {
+  min-width: 150px;
+  max-width: 150px;
+}
