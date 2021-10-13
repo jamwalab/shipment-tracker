@@ -1,4 +1,6 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import serverApiCall from "../services/shipmentData";
+//import {getAllShip} from "../services/serviceHelper";
 
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
@@ -6,9 +8,15 @@ function createData(id, job, customer, notes, po) {
   return { id, job, customer, notes, po };
 }
 
-const rows = []
+let rows = []
 
 function Tracker() {
+  useEffect(async () => {
+    const shipData = await serverApiCall.getAllShipments().then(resp => {return resp})
+    rows = shipData;
+    console.log(rows)
+  }, [rows]);
+
   return (
     <div>
       Tracker zzzzzzzzzzzzzzzzzzzz
@@ -33,7 +41,24 @@ function Tracker() {
             </TableRow>
           </TableHead>
           <TableBody>
-
+            {rows.map((row) => (
+              <TableRow key="row.id">
+                <TableCell align="center" className="table-w1">{row.id}</TableCell>
+                <TableCell align="center" className="table-w2">{row.status}</TableCell>
+                <TableCell align="center" className="table-w3">{row.job}</TableCell>
+                <TableCell align="center" className="table-w2">{row.customer}</TableCell>
+                <TableCell align="center" className="table-w4">{row.notes}</TableCell>
+                <TableCell align="center" className="table-w2">{row.po}</TableCell>
+                <TableCell align="center" className="table-w2">{row.bl}</TableCell>
+                <TableCell align="center" className="table-w3">{row.container}</TableCell>
+                <TableCell align="center" className="table-w1">{row.sublocation}</TableCell>
+                <TableCell align="center" className="table-w2">{row.portEta}</TableCell>
+                <TableCell align="center" className="table-w2">{row.destEta}</TableCell>
+                <TableCell align="center" className="table-w2">{row.submitted}</TableCell>
+                <TableCell align="center" className="table-w2">{row.release}</TableCell>
+                <TableCell align="center" className="table-w1">{row.comment}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

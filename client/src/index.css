@@ -42,21 +42,20 @@ th {
 }
 
 .table-w1 {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 40px;
+
 }
 
 .table-w2 {
-  min-width: 100px;
-  max-width: 100px;
+  min-width: 70px;
+
 }
 
 .table-w3 {
   min-width: 120px;
-  max-width: 120px;
+
 }
 
 .table-w4 {
-  min-width: 150px;
-  max-width: 150px;
+  min-width: 180px;
 }
