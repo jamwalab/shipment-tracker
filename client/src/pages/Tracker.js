@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import serverApiCall from "../services/shipmentData";
-//import {getAllShip} from "../services/serviceHelper";
+
+import { useSelector, useDispatch } from "react-redux";
+import {UPDATE_SHIPMENTS} from '../utils/actions';
 
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
@@ -8,15 +10,23 @@ function createData(id, job, customer, notes, po) {
   return { id, job, customer, notes, po };
 }
 
-let rows = []
-
 function Tracker() {
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+
+  const [allShipments, setShipments] = useState([]);
+
   useEffect(async () => {
     const shipData = await serverApiCall.getAllShipments().then(resp => {return resp})
-    rows = shipData;
-    console.log(rows)
-  }, [rows]);
+    setShipments(shipData);
+    dispatch({
+      type: UPDATE_SHIPMENTS,
+      savedShipments: shipData
+    })
+  }, []);
 
+
+  console.log(state)
   return (
     <div>
       Tracker zzzzzzzzzzzzzzzzzzzz
@@ -41,8 +51,8 @@ function Tracker() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key="row.id">
+            {allShipments.map((row) => (
+              <TableRow key={row.id}>
                 <TableCell align="center" className="table-w1">{row.id}</TableCell>
                 <TableCell align="center" className="table-w2">{row.status}</TableCell>
                 <TableCell align="center" className="table-w3">{row.job}</TableCell>
