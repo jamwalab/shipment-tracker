@@ -59,3 +59,17 @@ th {
 .table-w4 {
   min-width: 180px;
 }
+
+.editCellData {
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #1976d2;
+  padding: 0;
+  margin: 0;
+  width: 120px;
+  text-align: center;
+}
+
+.editCellData:focus {
+  border-color: red;
+}

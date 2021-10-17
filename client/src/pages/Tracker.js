@@ -4,27 +4,34 @@ import serverApiCall from "../services/shipmentData";
 import { useSelector, useDispatch } from "react-redux";
 import {UPDATE_SHIPMENTS} from '../utils/actions';
 
-import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-
-function createData(id, job, customer, notes, po) {
-  return { id, job, customer, notes, po };
-}
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Input } from '@mui/material';
 
 function Tracker() {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
-  const [allShipments, setShipments] = useState([]);
+  //const [allShipments, setShipments] = useState([]);
 
   useEffect(async () => {
     const shipData = await serverApiCall.getAllShipments().then(resp => {return resp})
-    setShipments(shipData);
+    //setShipments(shipData);
     dispatch({
       type: UPDATE_SHIPMENTS,
       savedShipments: shipData
     })
   }, []);
 
+  const editDataCellBlur = (event) => {
+    let jobNumber = event.target.value;
+    console.log("Blurrr", event.target.value)
+    event.target.closest('td').textContent = `${jobNumber}`;
+  }
+
+  const editDataCellClick = (event) => {
+    let jobNumber = event.target.innerHTML;
+    event.target.innerHTML = `<input class="editCellData" autofocus value=${jobNumber} />`;  
+    event.target.querySelector('input').focus();
+  }
 
   console.log(state)
   return (
@@ -51,11 +58,11 @@ function Tracker() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {allShipments.map((row) => (
+            {state.savedShipments.map((row) => (
               <TableRow key={row.id}>
                 <TableCell align="center" className="table-w1">{row.id}</TableCell>
                 <TableCell align="center" className="table-w2">{row.status}</TableCell>
-                <TableCell align="center" className="table-w3">{row.job}</TableCell>
+                <TableCell align="center" className="table-w3" onClick={editDataCellClick} onBlur={editDataCellBlur}>{row.job}</TableCell>
                 <TableCell align="center" className="table-w2">{row.customer}</TableCell>
                 <TableCell align="center" className="table-w4">{row.notes}</TableCell>
                 <TableCell align="center" className="table-w2">{row.po}</TableCell>

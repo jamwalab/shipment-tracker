@@ -7,7 +7,7 @@ export const reducer = (state, action) => {
     case UPDATE_SHIPMENTS:
       return {
         ...state,
-        savedShipments: [...state.savedShipments, ...action.savedShipments]
+        savedShipments: [...action.savedShipments]
       }
     
     default:
