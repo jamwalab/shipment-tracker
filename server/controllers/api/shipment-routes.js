@@ -110,6 +110,7 @@ router.post('/', (req,res) => {
 
 //----PUT - EDIT AND UPDATE A SHIPMENT----//
 router.put('/:id', (req, res) => {
+  console.log(res.body)
   Shipment.update(
     req.body,
     {

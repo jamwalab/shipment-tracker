@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//---AXIOS SETUP---//
 const http = axios.create({
   baseURL: "http://localhost:3001/api",
   headers: {
@@ -8,6 +9,7 @@ const http = axios.create({
 });
 
 class serverApiCall {
+  //---GET ALL SHIPMENTS---//
   async getAllShipments() {
     //return await fetch(`http://localhost:3001/api/shipment`).then(resp => {
       //return resp.json();
@@ -36,6 +38,27 @@ class serverApiCall {
           "release": eachShip.release,
           "addComment": eachShip.comment,
           "comment": eachShip.comment? "Y" : "N",
+        }
+      })
+    })
+  }
+
+  //---EDIT A SHIPMENT (PUT REQUEST)---//
+  async editShipments(dataUpdate, id) {
+    //console.log(dataUpdate, id)
+    return await http.put(`/shipment/${id}`, dataUpdate)
+  }
+
+  //---GET ALL CUSTOMERS---//
+  async getAllCustomers() {
+    return await http.get("/customer").then(resp => {
+      console.log(resp)
+      return resp.data
+    }).then( async (response) => {
+      return await response.map(eachCustomer => {
+        return {
+          "id": eachCustomer.id,
+          "customer_name": eachCustomer.customer_name
         }
       })
     })

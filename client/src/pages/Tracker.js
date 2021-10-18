@@ -1,17 +1,21 @@
 import React, {useState, useEffect} from "react";
 import serverApiCall from "../services/shipmentData";
 
+import CustomerDropdown from '../components/CustomerDropdown';
+
 import { useSelector, useDispatch } from "react-redux";
-import {UPDATE_SHIPMENTS} from '../utils/actions';
+import {UPDATE_SHIPMENTS, EDIT_SHIPMENT, GET_ALL_CUSTOMERS} from '../utils/actions';
 
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Input } from '@mui/material';
 
 function Tracker() {
+  //---GLOBAL STATE---//
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
   //const [allShipments, setShipments] = useState([]);
 
+  //---ON LOAD SETTINGS---//
   useEffect(async () => {
     const shipData = await serverApiCall.getAllShipments().then(resp => {return resp})
     //setShipments(shipData);
@@ -19,19 +23,77 @@ function Tracker() {
       type: UPDATE_SHIPMENTS,
       savedShipments: shipData
     })
+
+    const customerData = await serverApiCall.getAllCustomers().then(resp => {return resp});
+    dispatch({
+      type: GET_ALL_CUSTOMERS,
+      savedCustomers: customerData
+    })
   }, []);
 
-  const editDataCellBlur = (event) => {
-    let jobNumber = event.target.value;
-    console.log("Blurrr", event.target.value)
-    event.target.closest('td').textContent = `${jobNumber}`;
+  //---INPUT BOX EDIT SETTINGS START---//
+  //---INPUT BOX SAVE ON BLUR---//
+  const editDataInputBlur = (rowId, col) => (event) => {
+    const data = event.target.value;
+    //console.log(col)
+    const dataUpload = {[col]: data}
+    //add data to closest td
+    event.target.closest('td').textContent = `${data}`;
+    serverApiCall.editShipments(dataUpload, rowId)
+
+    dispatch({
+      type: EDIT_SHIPMENT,
+      editData: {rowId, col, data}
+    })
+    //console.log("Blurrr", event.target.value, rowId, state.savedShipments)
   }
 
-  const editDataCellClick = (event) => {
-    let jobNumber = event.target.innerHTML;
-    event.target.innerHTML = `<input class="editCellData" autofocus value=${jobNumber} />`;  
+  //---CREATE INPUT BOX ON CLICK---//
+  const editDataInputClick = (rowId) => (event) => {
+    let data = event.target.innerHTML;
+    //console.log(event.target.innerHTML, rowId)
+    //add input
+    event.target.innerHTML = `<input class="editCellData" value=${data}>`;  
+    //focus input
     event.target.querySelector('input').focus();
   }
+  //---INPUT BOX EDIT SETTINGS END---//
+
+  /*
+  //---DROPDOWN ON CLICK EDIT SETTINGS START---//
+  //---SAVE DROPDOWN ON BLUR---//
+  const editDropSelectBlur = (rowId, col) => (event) => {
+    //const data = event.target.value;
+    //console.log(col)
+    //const dataUpload = {[col]: data}
+    //add data to closest td
+    event.target.closest('td').textContent = ``;
+    //serverApiCall.editShipments(dataUpload, rowId)
+
+    dispatch({
+      type: EDIT_SHIPMENT,
+      editData: {rowId, col, data}
+    })
+    //console.log("Blurrr", event.target.value, rowId, state.savedShipments)
+  }
+
+  //---CREATE DROPDOWN ON CLICK---//
+  const editDropSelectClick = (rowId) => (event) => {
+    let data = event.target.innerHTML;
+    //console.log(event.target.innerHTML, rowId)
+    //Find Index of the customer
+    const index = state.savedCustomers.findIndex(ele => ele.customer_name === data);
+
+    event.target.innerHTML = `<select name="cars" id="cars">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="opel">Opel</option>
+      <option value="audi">Audi</option>
+    </select>`;  
+  }
+
+  //---DROPDOWN ON CLICK EDIT SETTINGS END---//
+  */
 
   console.log(state)
   return (
@@ -62,13 +124,13 @@ function Tracker() {
               <TableRow key={row.id}>
                 <TableCell align="center" className="table-w1">{row.id}</TableCell>
                 <TableCell align="center" className="table-w2">{row.status}</TableCell>
-                <TableCell align="center" className="table-w3" onClick={editDataCellClick} onBlur={editDataCellBlur}>{row.job}</TableCell>
-                <TableCell align="center" className="table-w2">{row.customer}</TableCell>
+                <TableCell align="center" className="table-w3" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "job")}>{row.job}</TableCell>
+                <TableCell align="center" className="table-w2" ><CustomerDropdown selectedRow={row.customer}></CustomerDropdown></TableCell>
                 <TableCell align="center" className="table-w4">{row.notes}</TableCell>
-                <TableCell align="center" className="table-w2">{row.po}</TableCell>
-                <TableCell align="center" className="table-w2">{row.bl}</TableCell>
+                <TableCell align="center" className="table-w2" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "po")}>{row.po}</TableCell>
+                <TableCell align="center" className="table-w2" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "bl")}>{row.bl}</TableCell>
                 <TableCell align="center" className="table-w3">{row.container}</TableCell>
-                <TableCell align="center" className="table-w1">{row.sublocation}</TableCell>
+                <TableCell align="center" className="table-w1" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "sublocation")}>{row.sublocation}</TableCell>
                 <TableCell align="center" className="table-w2">{row.portEta}</TableCell>
                 <TableCell align="center" className="table-w2">{row.destEta}</TableCell>
                 <TableCell align="center" className="table-w2">{row.submitted}</TableCell>
