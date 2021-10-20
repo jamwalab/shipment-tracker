@@ -11,8 +11,10 @@ export default function CustomerDropdown(client) {
   const dispatch = useDispatch();
 
   const handleChange = (rowId) => (event) => {
+    let index = state.savedCustomers.findIndex(ele => ele.customer_name === event.target.value);
     
-    const dataUpload = {"customer": event.target.value}
+
+    const dataUpload = {"customer_id": state.savedCustomers[index].id}
 /////---FOR SERVER SAVE IT HAS TO BE CUSTOMER ID
     serverApiCall.editShipments(dataUpload, rowId)
     console.log(dataUpload, rowId)
