@@ -1,12 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import {FormControl, Select, MenuItem } from '@mui/material';
 
-export default function CustomerDropdown(selectedRow) {
+import serverApiCall from "../../services/shipmentData";
+import {EDIT_SHIPMENT} from '../../utils/actions';
+
+export default function CustomerDropdown(client) {
   //---GLOBAL STATE---//
   const state = useSelector(state => state);
   const dispatch = useDispatch();
+
+  const handleChange = (rowId) => (event) => {
+    
+    const dataUpload = {"customer": event.target.value}
+/////---FOR SERVER SAVE IT HAS TO BE CUSTOMER ID
+    serverApiCall.editShipments(dataUpload, rowId)
+    console.log(dataUpload, rowId)
+    dispatch({
+      type: EDIT_SHIPMENT,
+      editData: {rowId, col: "customer", data: event.target.value}
+    })
+  }
 
   return (
 
@@ -14,14 +28,12 @@ export default function CustomerDropdown(selectedRow) {
       <Select
         id="demo-simple-select-standard"
         label="Customer"
+        defaultValue={client.selectedRow}
+        onChange={handleChange(client.rowId)}
       >
         {state.savedCustomers.map((customer) => {
-          const theRow = false;
-          if (customer.customer_name === selectedRow) {
-            theRow = true;
-          }
           return (
-            <MenuItem value={customer.customer_name} selected={theRow}>{customer.customer_name}</MenuItem>
+            <MenuItem value={customer.customer_name} key={customer.customer_name}>{customer.customer_name}</MenuItem>
         )})}
       </Select>
     </FormControl>

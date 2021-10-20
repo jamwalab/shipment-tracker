@@ -45,7 +45,7 @@ class serverApiCall {
 
   //---EDIT A SHIPMENT (PUT REQUEST)---//
   async editShipments(dataUpdate, id) {
-    //console.log(dataUpdate, id)
+    console.log(dataUpdate, id)
     return await http.put(`/shipment/${id}`, dataUpdate)
   }
 

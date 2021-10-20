@@ -125,7 +125,7 @@ function Tracker() {
                 <TableCell align="center" className="table-w1">{row.id}</TableCell>
                 <TableCell align="center" className="table-w2">{row.status}</TableCell>
                 <TableCell align="center" className="table-w3" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "job")}>{row.job}</TableCell>
-                <TableCell align="center" className="table-w2" ><CustomerDropdown selectedRow={row.customer}></CustomerDropdown></TableCell>
+                <TableCell align="center" className="table-w2" ><CustomerDropdown selectedRow={row.customer} rowId={row.id}></CustomerDropdown></TableCell>
                 <TableCell align="center" className="table-w4">{row.notes}</TableCell>
                 <TableCell align="center" className="table-w2" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "po")}>{row.po}</TableCell>
                 <TableCell align="center" className="table-w2" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "bl")}>{row.bl}</TableCell>
