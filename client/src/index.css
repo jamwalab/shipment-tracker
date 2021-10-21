@@ -73,3 +73,16 @@ th {
 .editCellData:focus {
   border-color: red;
 }
+
+/*--ADD ICON BUTTONS--*/
+article {
+  display: flex;
+}
+
+.addShipmentIcon {
+  padding: 10px;
+}
+
+.addShipmentIcon:hover {
+  cursor: pointer;
+}

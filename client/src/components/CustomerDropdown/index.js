@@ -26,7 +26,7 @@ export default function CustomerDropdown(client) {
 
   return (
 
-    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+    <FormControl variant="standard">
       <Select
         id="demo-simple-select-standard"
         label="Customer"
