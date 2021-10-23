@@ -3,6 +3,7 @@ import serverApiCall from "../services/shipmentData";
 import { motion } from "framer-motion"
 
 import CustomerDropdown from '../components/CustomerDropdown';
+import NewShipmentForm from '../components/NewShipmentForm';
 
 import { useSelector, useDispatch } from "react-redux";
 import {UPDATE_SHIPMENTS, EDIT_SHIPMENT, GET_ALL_CUSTOMERS} from '../utils/actions';
@@ -30,7 +31,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 1000, 
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -99,41 +100,6 @@ function Tracker() {
   }
   //---INPUT BOX EDIT SETTINGS END---//
 
-  /*
-  //---DROPDOWN ON CLICK EDIT SETTINGS START---//
-  //---SAVE DROPDOWN ON BLUR---//
-  const editDropSelectBlur = (rowId, col) => (event) => {
-    //const data = event.target.value;
-    //console.log(col)
-    //const dataUpload = {[col]: data}
-    //add data to closest td
-    event.target.closest('td').textContent = ``;
-    //serverApiCall.editShipments(dataUpload, rowId)
-
-    dispatch({
-      type: EDIT_SHIPMENT,
-      editData: {rowId, col, data}
-    })
-    //console.log("Blurrr", event.target.value, rowId, state.savedShipments)
-  }
-
-  //---CREATE DROPDOWN ON CLICK---//
-  const editDropSelectClick = (rowId) => (event) => {
-    let data = event.target.innerHTML;
-    //console.log(event.target.innerHTML, rowId)
-    //Find Index of the customer
-    const index = state.savedCustomers.findIndex(ele => ele.customer_name === data);
-
-    event.target.innerHTML = `<select name="cars" id="cars">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="opel">Opel</option>
-      <option value="audi">Audi</option>
-    </select>`;  
-  }
-
-  //---DROPDOWN ON CLICK EDIT SETTINGS END---//
-  */
   //--MODAL SETTINGS--//
   const [open, setOpen] = React.useState(false);
   const handleModalOpen = () => setOpen(true);
@@ -219,12 +185,7 @@ function Tracker() {
           >
             <Fade in={open}>
               <Box sx={style}>
-                <Typography id="transition-modal-title" variant="h6" component="h2">
-                  Text in a modal
-                </Typography>
-                <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                <NewShipmentForm></NewShipmentForm>
               </Box>
             </Fade>
           </Modal>
