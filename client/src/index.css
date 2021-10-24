@@ -71,7 +71,7 @@ th {
 }
 
 .editCellData:focus {
-  border-color: red;
+  border-color: #1976d2;
 }
 
 /*--ADD ICON BUTTONS--*/
