@@ -2,7 +2,6 @@ const seedCustomer = require('./customer-seeds');
 const seedCarrier = require('./carrier-seeds');
 const seedStatus = require('./status-seeds');
 const seedUser = require('./user-seeds');
-const seedSublocation = require('./sublocation-seeds');
 
 const sequelize = require('../config/connection');
 
@@ -15,8 +14,6 @@ const seedAll = async () => {
   console.log('\n----CARRIER SYNCED----\n');
   await seedStatus();
   console.log('\n----STATUS SYNCED----\n');
-  await seedSublocation();
-  console.log('\n----USER SYNCED----\n');
   await seedUser();
   console.log('\n----USER SYNCED----\n');
 

@@ -2,8 +2,6 @@ const Carrier = require('./Carrier');
 const Customer = require('./Customer');
 const Shipment = require('./Shipment');
 const Status = require('./Status');
-const Sublocation = require('./Sublocation');
-const Port = require('./Port');
 const User = require('./User');
 const Vessel = require('./Vessel');
 
@@ -52,22 +50,5 @@ Status.hasMany(Shipment, {
   foreignKey: 'status_id'
 });
 
-//Associations between Shipment and Port
-Shipment.belongsTo(Port, {
-  foreignKey: 'port_id'
-});
 
-Port.hasMany(Shipment, {
-  foreignKey: 'port_id'
-});
-
-//Associations between Shipment and Sublocation
-Shipment.belongsTo(Sublocation, {
-  foreignKey: 'sublocation_id'
-});
-
-Sublocation.hasMany(Shipment, {
-  foreignKey: 'sublocation_id'
-});
-
-module.exports = {Carrier, Customer, Shipment, Status, Sublocation, User, Port, Vessel}
+module.exports = {Carrier, Customer, Shipment, Status, User, Vessel}

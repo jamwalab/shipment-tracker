@@ -8,7 +8,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 
-import './style.css';
+import serverApiCall from "../../services/shipmentData";
 
 const theme = createTheme({
 
@@ -28,7 +28,8 @@ const NewShipmentForm = () => {
     subL: "",
     portEta: null,
     destEta: null,
-    submitted: null
+    submitted: null,
+    errorState: false
   })
 
   const handleDateChange = (type, newDate) => {
@@ -37,12 +38,39 @@ const NewShipmentForm = () => {
   }
 
   const handleChange = (prop) => (event) => {
-    updateFormData({ ...formData, [prop]: event.target.value });
+    if (prop === "customer") {
+      console.log("aaaaa", formData.errorState);
+      updateFormData({...formData, [prop]: event.target.value, "errorState": false})
+    }
+    else {
+      updateFormData({ ...formData, [prop]: event.target.value });
+    }
     console.log(formData)
   };
 
   const handleSubmit = () => {
+    console.log("submit")
+    if (formData.customer === "") {
+      updateFormData({ ...formData, "errorState": true });
+    }
+    else {
+      let indexCus = state.savedCustomers.findIndex(ele => ele.customer_name === formData.customer);
+      let dataUpload = {
+        "customer_id": state.savedCustomers[indexCus].id,
+        "job": formData.job,
+        "notes": formData.notes,
+        "po": formData.po,
+        "bl": formData.bl,
+        "sublocation_id": formData.subL,
+        "portEta": formData.portEta,
+        "destEta": formData.destEta,
+        "submitted": formData.submitted,
+        "status_id": 1,
+        "user_id": 1
+      }
 
+      serverApiCall.addNewShipments(dataUpload)
+    }
   }
 
   return (
@@ -59,7 +87,7 @@ const NewShipmentForm = () => {
               sx={{ m: 1, width: '400px'}}
             />
           </FormControl>
-          <FormControl variant="standard">
+          <FormControl variant="standard" error={formData.errorState}>
             <InputLabel id="demo-simple-select-standard-label" sx={{ mx: 3}}>Customer</InputLabel>
             <Select
               id="demo-simple-select-standard"
@@ -74,6 +102,7 @@ const NewShipmentForm = () => {
                   <MenuItem value={customer.customer_name} key={customer.customer_name}>{customer.customer_name}</MenuItem>
               )})}
             </Select>
+            <FormHelperText sx={{ mx: 3}} style={{ display: formData.errorState ? "block" : "none" }} >Customer name is required!!</FormHelperText>
           </FormControl>
         </div>
         <TextField
@@ -158,8 +187,7 @@ const NewShipmentForm = () => {
           rows={2}
           sx={{ m: 1, width: '800px'}}
         />
-        <p className="errorText">Customer name is required. Please try again!!</p>
-        <Button variant="contained" onSubmit={handleSubmit}>SUBMIT</Button>
+        <Button variant="contained" onClick={handleSubmit}>SUBMIT</Button>
       </Box>
     </ThemeProvider>
   )

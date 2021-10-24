@@ -21,26 +21,32 @@ class serverApiCall {
       return await response.map(eachShip => {
         return {
           "id": eachShip.id,
-          "carrier_name": eachShip.carrier.carrier_name,
+          "carrier_name": eachShip.carrier? eachShip.carrier.carrier_name : "",
           "customer": eachShip.customer.customer_name,
           "container": eachShip.container,
           "destEta": eachShip.destEta,
           "portEta": eachShip.portEta,
-          "status": eachShip.status.status_text,
-          "sublocation": eachShip.sublocation.sublocation_code,
+          "status": eachShip.status.status_text  || "",
+          "sublocation": eachShip.sublocation_id,
           "submitted": eachShip.submitted,
           "user": eachShip.user.username,
           "bl": eachShip.bl,
           "po": eachShip.po,
           "notes": eachShip.notes,
           "job": eachShip.job,
-          "port": eachShip.port,
+          "port": eachShip.port_id,
           "release": eachShip.release,
           "addComment": eachShip.comment,
           "comment": eachShip.comment? "Y" : "N",
         }
       })
     })
+  }
+
+  //---ADD NEW SHIPMENTS---//
+  async addNewShipments(newShipment) {
+    console.log(newShipment)
+    return await http.post(`/shipment`, newShipment)
   }
 
   //---EDIT A SHIPMENT (PUT REQUEST)---//

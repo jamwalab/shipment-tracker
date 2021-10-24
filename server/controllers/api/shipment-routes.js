@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Shipment, Carrier, Customer, Status, Port, Sublocation, User, Vessel} = require('../../models');
+const {Shipment, Carrier, Customer, Status, User, Vessel} = require('../../models');
 
 //----GET - FIND ALL SHIPMENTS----//
 router.get('/', (req, res) => {
@@ -13,12 +13,6 @@ router.get('/', (req, res) => {
       },
       {
         model: Status
-      },
-      {
-        model: Sublocation
-      },
-      {
-        model: Port
       },
       {
         model: Vessel
@@ -53,12 +47,6 @@ router.get('/:id', (req, res) => {
         model: Status
       },
       {
-        model: Sublocation
-      },
-      {
-        model: Port
-      },
-      {
         model: Vessel
       },
       {
@@ -82,6 +70,7 @@ router.get('/:id', (req, res) => {
 
 //----POST - CREATE NEW SHIPMENT----//
 router.post('/', (req,res) => {
+  console.log(req.body)
   Shipment.create({
     job: req.body.job,
     customer_id: req.body.customer_id,
@@ -134,7 +123,7 @@ router.put('/:id', (req, res) => {
 
 //----DELETE - DELETE A SHIPMENT----//
 router.delete('/:id', (req, res) => {
-  Shipment.delete(
+  Shipment.destroy(
     {
       where: {
         id: req.params.id

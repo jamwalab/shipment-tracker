@@ -61,19 +61,11 @@ Shipment.init(
     },
     //shipment port
     port_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'port',
-        key: 'id'
-      }
+      type: DataTypes.STRING
     },
     //Sublocation
     sublocation_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'sublocation',
-        key: 'id'
-      }
+      type: DataTypes.STRING
     },
     //ETA at port
     portEta: {
