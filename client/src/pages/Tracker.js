@@ -17,7 +17,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#fbfbfb'
+      main: '#dadada'
     },
     secondary: {
       main: "#1976d2"
@@ -100,6 +100,34 @@ function Tracker() {
   }
   //---INPUT BOX EDIT SETTINGS END---//
 
+  //---DATE PICKER EDIT SETTINGS START---//
+  //---DATE PICKER SAVE ON BLUR---//
+  const editDatesOnBlur = (rowId, col) => (event) => {
+    const data = event.target.value;
+    //console.log(col)
+    const dataUpload = {[col]: data}
+    //add data to closest td
+    event.target.closest('td').textContent = `${data}`;
+    serverApiCall.editShipments(dataUpload, rowId)
+
+    dispatch({
+      type: EDIT_SHIPMENT,
+      editData: {rowId, col, data}
+    })
+    //console.log("Blurrr", event.target.value, rowId, state.savedShipments)
+  }
+
+  //---DATE PICKER BOX ON CLICK---//
+  const editDatesOnClick = (rowId) => (event) => {
+    let data = event.target.innerHTML;
+    //console.log(event.target.innerHTML, rowId)
+    //add input
+    event.target.innerHTML = `<input class="editCellData" value=${data}>`;  
+    //focus input
+    event.target.querySelector('input').focus();
+  }
+  //---DATE PICKER EDIT SETTINGS END---//
+
   //--MODAL SETTINGS--//
   const [open, setOpen] = React.useState(false);
   const handleModalOpen = () => setOpen(true);
@@ -125,7 +153,7 @@ function Tracker() {
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell align="center" className="table-w1">ID</TableCell>
+                <TableCell align="center" className="table-w1"></TableCell>
                 <TableCell align="center" className="table-w2">STATUS</TableCell>
                 <TableCell align="center" className="table-w3">JOB</TableCell>
                 <TableCell align="center" className="table-w2">CUSTOMER</TableCell>
@@ -144,7 +172,7 @@ function Tracker() {
             <TableBody>
               {state.savedShipments.map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell align="center" className="table-w1">{row.id}</TableCell>
+                  <TableCell align="center" className="table-w1"><Button size="small" variant="contained">Edit</Button></TableCell>
                   <TableCell align="center" className="table-w2">{row.status}</TableCell>
                   <TableCell align="center" className="table-w3" onClick={editDataInputClick(row.id)} onBlur={editDataInputBlur(row.id, "job")}>{row.job}</TableCell>
                   <TableCell align="center" className="table-w2" ><CustomerDropdown selectedRow={row.customer} rowId={row.id}></CustomerDropdown></TableCell>

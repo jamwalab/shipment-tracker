@@ -13,8 +13,11 @@ export default function CustomerDropdown(client) {
   const [menuValue, setMenuValue] = useState("");
   
   useEffect (() =>{
-    setMenuValue(client.selectedRow);
-  }, [])
+    //Only set value when state has saved customer to avoid REACT warning
+    if (state.savedCustomers.length > 0) {
+      setMenuValue(client.selectedRow);
+    }
+  }, [state])
 
   const handleChange = (rowId) => (event) => {
     //Find index in saved customer list in global state
